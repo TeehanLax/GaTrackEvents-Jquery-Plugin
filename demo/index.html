@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>jquery.gaTrackEvents.js demo</title>
+
+	<style type="text/css">
+
+		#rap { width:600px; }
+		div { margin: 0 auto; }
+
+		a { 
+			text-decoration: none;
+		}
+
+	</style>
+
+</head>
+<body>
+
+	<div id="rap">
+
+		<h2>Track basic event</h2>
+		<div class="button-basic" data-ga-category="Basic" data-ga-action="Click" data-ga-label="Button">Fire Basic</div>
+
+		<h2>Track out bound link as Event</h2>
+		<a href="http://www.teehanlax.com" class="outbound" data-ga-category="Outbound" data-ga-action="Click" data-ga-label="Teehan + Lax">Outbound</a>
+
+		<h2>Event with callback</h2>
+		<a href="#callback" class="callback" data-ga-category="Callback" data-ga-action="Click" data-ga-label="Output">Callback</a>
+
+		<h3>Output</h3>		
+		<div id="output">
+
+		</div>
+
+	</div>
+
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../src/jquery.gaTrackEvents.js"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+			
+			$('.button-basic').gaTrackEvents();
+
+			$('.outbound').gaTrackEvents({
+				linkOut : false
+			});
+			
+			$('.callback').gaTrackEvents({
+				linkOut : false,
+				callback : function(){
+					$('#output').append('Clicked callback link');
+				}
+			});
+
+
+		});
+
+		//Google analyitics
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-40437957-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+</body>
+</html>

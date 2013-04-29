@@ -17,12 +17,11 @@
 				e.preventDefault();
 
 				var $this = $(this);
-				var linkOut = $this.hasClass('out');
-
-				var category = (typeof $this.attr('data-ga-category') === 'string') ? $this.attr('data-ga-category') : opts.category;
-				var action   = (typeof $this.attr('data-ga-action')   === 'string') ? $this.attr('data-ga-action')   : opts.action;
-				var label    = (typeof $this.attr('data-ga-label')    === 'string') ? $this.attr('data-ga-label')    : opts.label;
-				var value    = (typeof $this.attr('data-ga-value')    === 'string') ? $this.attr('data-ga-value')    : opts.value;
+				var url = $this.attr('href');
+				var category = (typeof $this.data('ga-category') === 'string') ? $this.data('ga-category') : opts.category;
+				var action   = (typeof $this.data('ga-action')   === 'string') ? $this.data('ga-action')   : opts.action;
+				var label    = (typeof $this.data('ga-label')    === 'string') ? $this.data('ga-label')    : opts.label;
+				var value    = (typeof $this.data('ga-value')    === 'string') ? $this.data('ga-value')    : opts.value;
 
 				var eventArr = ['_trackEvent', category, action, label];
 
@@ -32,9 +31,12 @@
 
 				_gaq.push(eventArr);
 
-				if(linkOut && opts.linkOut){
-					var url = $this.attr('href');
+				if(opts.linkOut && typeof url === 'string'){
 					_gaq.push(function() { document.location = url; });
+				}
+
+				if(typeof opts.callback === 'function'){
+					opts.callback();
 				}
 
 			});
@@ -47,6 +49,7 @@
 	// default options
 	$.fn.gaTrackEvents.defaults = {
 		linkOut:   true,
+		callback:  null,
 		category: 'General',
 		action:   'Click',
 		label:    'Unknown',
