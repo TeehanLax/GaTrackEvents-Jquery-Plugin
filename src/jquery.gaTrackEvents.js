@@ -4,6 +4,7 @@
  * @copyright Teehan+Lax 2013
  */
 
+
 (function($) {
 
 	$.fn.gaTrackEvents = function(options) {
@@ -32,7 +33,13 @@
 				_gaq.push(eventArr);
 
 				if(opts.linkOut && typeof url === 'string'){
-					_gaq.push(function() { document.location = url; });
+					_gaq.push(function() {
+						if ($this.attr('target') === '_blank') {
+							return true;
+						}else{
+							document.location = url;
+						}
+					});
 				}
 
 				if(typeof opts.callback === 'function'){
