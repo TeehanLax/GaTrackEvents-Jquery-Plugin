@@ -13,7 +13,7 @@
 		var opts = $.extend(true, {}, $.fn.gaTrackEvents.defaults, options);
 
 		this.each(function() {
-			$(this).click(function(e){
+			$(this).bind(opts.event, function(e){
 				e.preventDefault();
 
 				var $this = $(this);
@@ -36,7 +36,7 @@
 				}
 
 				if(typeof opts.callback === 'function'){
-					opts.callback();
+					opts.callback($this);
 				}
 
 			});
@@ -48,6 +48,7 @@
 
 	// default options
 	$.fn.gaTrackEvents.defaults = {
+		event: 'click',
 		linkOut:   true,
 		callback:  null,
 		category: 'General',
