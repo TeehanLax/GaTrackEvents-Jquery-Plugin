@@ -34,11 +34,7 @@
 
 				if(opts.linkOut && typeof url === 'string'){
 					_gaq.push(function() {
-						if ($this.attr('target') === '_blank') {
-							return true;
-						}else{
-							document.location = url;
-						}
+						document.location = url;
 					});
 				}
 
